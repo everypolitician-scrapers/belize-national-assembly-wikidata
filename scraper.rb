@@ -34,3 +34,6 @@ def fetch_info(names)
 end
 
 fetch_info wikinames_from('https://en.wikipedia.org/wiki/Belizean_general_election,_2012')
+
+require 'rest-client'
+warn RestClient.post ENV['MORPH_REBUILDER_URL'], {} if ENV['MORPH_REBUILDER_URL']
