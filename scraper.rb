@@ -3,9 +3,10 @@
 
 require 'wikidata/fetcher'
 
-names = EveryPolitician::Wikidata.wikipedia_xpath( 
-  url: 'https://en.wikipedia.org/wiki/Belizean_general_election,_2012',
-  xpath: '//h3[span[@id="By_constituency"]]/following-sibling::table[1]//tr[td[@bgcolor]]//td[5]//a[not(@class="new")]/@title',
-) 
-EveryPolitician::Wikidata.scrape_wikidata(names: { en: names }, output: false)
+members_2012 = EveryPolitician::Wikidata.wikipedia_xpath(
+  url: 'https://pl.wikipedia.org/wiki/Wybory_parlamentarne_i_lokalne_w_Belize_w_2012_roku',
+  xpath: '//h3[span[@id="Parlamentarzyści"]]/following-sibling::table[1]//tr[td]//td[3]//a[not(@class="new")]/@title',
+  as_ids: true,
+)
+EveryPolitician::Wikidata.scrape_wikidata(ids: members_2012)
 
