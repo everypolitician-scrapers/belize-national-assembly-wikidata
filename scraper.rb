@@ -8,5 +8,14 @@ members_2012 = EveryPolitician::Wikidata.wikipedia_xpath(
   xpath: '//h3[span[@id="Parlamentarzyści"]]/following-sibling::table[1]//tr[td]//td[3]//a[not(@class="new")]/@title',
   as_ids: true,
 )
-EveryPolitician::Wikidata.scrape_wikidata(ids: members_2012)
 
+query = <<SPARQL
+  SELECT DISTINCT ?item WHERE {
+    ?item p:P39 [ ps:P39 wd:Q21290854 ; pq:P2937 ?term ] .
+    ?term p:P31/pq:P1545 ?ordinal .
+    FILTER (xsd:integer(?ordinal) >= 9)
+  }
+SPARQL
+p39s = EveryPolitician::Wikidata.sparql(query)
+
+EveryPolitician::Wikidata.scrape_wikidata(ids: p39s | members_2012)
